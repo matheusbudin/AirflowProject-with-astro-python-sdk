@@ -23,6 +23,13 @@ dag = DAG(
     schedule_interval='0 0 * * *', # run the task every day at midnight
 )
 
+
+# define the prepare_data task
+def prepare_data():
+    # do some data preparation work it can be a simples data cleaning
+    pass
+
+
 # define the Python function that will be used as the task
 def fetch_and_store_data():
     # make the API request using Astro Python SDK
@@ -35,17 +42,6 @@ def fetch_and_store_data():
     db_conn.commit()
     db_conn.close()
 
-# define the prepare_data task
-def prepare_data():
-    # do some data preparation work it can be a simples data cleaning
-    pass
-
-# define the operator for prepare_data
-run_prepare_data = PythonOperator(
-    task_id='prepare_data',
-    python_callable=prepare_data,
-    dag=dag,
-)
 
 
 # define the operator that will run the task
@@ -54,6 +50,14 @@ run_task = PythonOperator(
     python_callable=fetch_and_store_data,
     dag=dag,
 )
+
+# define the operator for prepare_data
+run_prepare_data = PythonOperator(
+    task_id='prepare_data',
+    python_callable=prepare_data,
+    dag=dag,
+)
+
 
 # set the dependencies of the task
 run_prepare_data >> run_task
