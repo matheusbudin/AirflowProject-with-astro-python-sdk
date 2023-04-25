@@ -35,6 +35,19 @@ def fetch_and_store_data():
     db_conn.commit()
     db_conn.close()
 
+# define the prepare_data task
+def prepare_data():
+    # do some data preparation work it can be a simples data cleaning
+    pass
+
+# define the operator for prepare_data
+run_prepare_data = PythonOperator(
+    task_id='prepare_data',
+    python_callable=prepare_data,
+    dag=dag,
+)
+
+
 # define the operator that will run the task
 run_task = PythonOperator(
     task_id='fetch_and_store_data',
@@ -43,4 +56,4 @@ run_task = PythonOperator(
 )
 
 # set the dependencies of the task
-run_task
+run_prepare_data >> run_task

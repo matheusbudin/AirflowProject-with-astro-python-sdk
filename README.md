@@ -8,8 +8,8 @@ Assuming that you already have airflow installed, follow the steps ahead:
 * follow this video: https://www.loom.com/share/7589687641e34c67b19572cd6b8ed903
 
 #dependecies needed:
-
-- [Astro Python SDK instalation] (https://github.com/astronomer/astro-sdk)
+- Docker Desktop;
+- [Astro Python SDK instalation] (https://github.com/astronomer/astro-sdk).
 
 *To test it:
 1. change the line 29, overwriting with an API URL of youre choice;
