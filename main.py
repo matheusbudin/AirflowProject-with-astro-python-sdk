@@ -7,8 +7,8 @@ from airflow.operators.python_operator import PythonOperator
 default_args = {
     'owner': 'airflow',
     'depends_on_past': False,
-    'start_date': datetime(2023, 4, 25),
-    'email': ['airflow@example.com'],
+    'start_date': datetime(2023, 4, 25), #define a date to start the ingestion job
+    'email': ['putYourEmailHere@email.com'],
     'email_on_failure': False,
     'email_on_retry': False,
     'retries': 1,
@@ -26,10 +26,10 @@ dag = DAG(
 # define the Python function that will be used as the task
 def fetch_and_store_data():
     # make the API request using Astro Python SDK
-    api_data = astro.requests.get('https://api.example.com/data')
+    api_data = astro.requests.get('https://api.example.com/data') #overwrite with a API URL of your choice
     
     # store the data in the database using Astro Python SDK
-    db_conn = astro.connect('postgresql://username:password@host:port/database')
+    db_conn = astro.connect('postgresql://username:password@host:port/database') # Choose a DB as well
     cursor = db_conn.cursor()
     cursor.execute('INSERT INTO my_table (data) VALUES (%s)', (api_data,))
     db_conn.commit()
